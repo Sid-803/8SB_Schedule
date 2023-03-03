@@ -1,0 +1,109 @@
+Why Scheduling?
+    For execution at hourly basis, daily basis, weekly basis, monthly basis or even some other as well.
+    PDF report is one of the best example.
+
+   1. What is Scheduling and where do we use it?
+   2. How to Schedule a task and job in Java using Spring boot Scheduler?
+   3.Annotations - @EnableScheduling and @Scheduled in scheduling context
+   4. different ways(fixed delay, fixed rate, and Cron expressions
+   5. Difference between point of time and point of period
+   6. Cron expression and how to write it.
+   7. various brainStorming Cron Expressions
+   8. Check an invalid Cron Expression
+
+1. a) particular time interval, without any human intervention.
+   b) particular data or file to any other application in a particular time interval.
+   Ex- Monthly bank statements, Salary slips, Insurance payment, Electricity bill, Daily Standup meetings, Sprint plan
+
+2. a) Period of time: A time gap. Doesnt have start or end. Ex-1 hour, 24 minutes.
+   b) Point of time: a particular time- ex 4AM
+
+3. @EnableScheduling - class level annotation. for a starter class for schedules.
+   @Scheduled - Method level annotation over a scheduling logic.
+
+4. Functionality of @Scheduled?
+    Annotation instricts container to execute the method in loop as per parameters provided
+
+    concepts used to support scheduling - fixed delay, fixed rate, cron expression
+    These are manadatory paramaetrs for @Scheduling annotation
+    Exception - IllegalStateException
+
+    Annotated method mustnot accept parameters and must have a return type.
+
+5. Fixed delay specifies a fixed time interval between scheduling an activity.
+    On startup, execution happens, can be delayed using initialDelay paramater
+    Bot fixed delay and initiaDelay can be passed as int or String
+
+    @Schedule(fixedDelay = 50)
+    @Schedule(initialDelay = 5000)
+
+    Or
+
+    @Schedule(fixedDelayString = 50)
+    @Schedule(initialDelayString = 5000)
+
+6. Using fixedRate, specifies a maximum time interval between jobs.
+    @Scheduled(fixedRate=50)
+    @Scheduled(fixedRateString = 50)
+
+7. Using cron
+    There are 6 asterix by default in cron
+    Could be assigned as Second, Minute, Hours, Day, Month, WeekDay
+    second(0-59) Minute(0-59) Hour(0-59) DayOfMonth(0-31) Month(0-12 or JAN-DEC) DayOfweek(0-7 or MON-SUN)
+
+    A cron symbol can accept symbols: *-,/?
+    Comma denotes possible values 004,6*** - execute at 4AM and 6AM (comma saperrated-same fields)
+    Dash(-) denotes a range, which means consider al possible values between the range 004-6*** i.e execute at 4AM,5AM and 6AM
+    hourly saperation
+    * any/every/all value
+    /-period of time
+    ? denotes any value at Day and WeekDay when month value is given.
+    English names can also be used for the day of the month and day of week fields. Use the first three letters of particular
+    day or month(case does-not matter)
+
+    everyday at 8AM
+    008***
+
+    everyday at 4PM
+    0016***
+
+    everyday at 9AM and 9PM
+    009,21***
+
+    everyday at 9AM and 8PM
+    009,20***
+
+    everyday at 8AM , 9AM, 10AMand 11AM
+    008-11***
+
+    a task executes 4 times starts at 9PM
+    0021-00***
+
+    6:30AM to 9:30M
+    0 30 6,21 ***
+
+    at 0th minute and 0th second
+    00****
+
+    at 15 seconds
+    15*****
+
+    every year in april everyday at 8AM
+    008*4
+
+    very new year to wish HNY
+    59 59 23 31 12 *
+
+    9PM and 6PM weekdays
+    * * 9-18 * * 6,7
+
+    every 15 second gap
+    */15 * * * * *
+
+    0th second of every minute with 30 second gap
+    0/30 * * * * *
+
+    Every day at 11AM and repeat with a gap of 30 min
+    0 0/30 11 * * *
+
+    etc etc
